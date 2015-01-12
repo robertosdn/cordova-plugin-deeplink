@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"    
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="org.apache.cordova.deeplink"
+    version="0.1.1-dev">
+    <name>Deeplink</name>
+    <description>Cordova Deeplink Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,deeplink,url,custom</keywords>
+    <repo>https://github.com/robertosdn/cordova-plugin-deeplink.git</repo>
+    <issue>https://github.com/robertosdn/cordova-plugin-deeplink</issue>
+
+    <js-module src="www/deeplink.js" name="Deeplink">
+        <clobbers target="navigator.deeplink" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+		<preference name="URL_SCHEME" />
+	
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Deeplink" >
+                <param name="android-package" value="org.apache.cordova.deeplink.Deeplink"/>
+            </feature>
+        </config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest/application/activity[1]">
+            <intent-filter>
+				<data android:scheme="$URL_SCHEME" />
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+			</intent-filter>
+        </config-file>
+
+        <source-file src="src/android/Deeplink.java" target-dir="src/org/apache/cordova/deeplink" />
+    </platform>
+</plugin>
