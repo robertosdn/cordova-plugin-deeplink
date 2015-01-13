@@ -27,7 +27,7 @@
     <license>Apache 2.0</license>
     <keywords>cordova,deeplink,url,custom</keywords>
     <repo>https://github.com/robertosdn/cordova-plugin-deeplink.git</repo>
-    <issue>https://github.com/robertosdn/cordova-plugin-deeplink</issue>
+    <issue>https://github.com/robertosdn/cordova-plugin-deeplink/issues</issue>
 
     <js-module src="www/deeplink.js" name="Deeplink">
         <clobbers target="navigator.deeplink" />
