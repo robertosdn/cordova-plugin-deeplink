@@ -20,8 +20,8 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"    
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="org.apache.cordova.deeplink"
-    version="0.1.1-dev">
+    id="org.plugin.cordova.deeplink"
+    version="0.1.1">
     <name>Deeplink</name>
     <description>Cordova Deeplink Plugin</description>
     <license>Apache 2.0</license>
@@ -39,7 +39,7 @@
 	
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Deeplink" >
-                <param name="android-package" value="org.apache.cordova.deeplink.Deeplink"/>
+                <param name="android-package" value="org.plugin.cordova.deeplink.Deeplink"/>
             </feature>
         </config-file>
 
@@ -52,6 +52,6 @@
 			</intent-filter>
         </config-file>
 
-        <source-file src="src/android/Deeplink.java" target-dir="src/org/apache/cordova/deeplink" />
+        <source-file src="src/android/Deeplink.java" target-dir="src/org/plugin/cordova/deeplink" />
     </platform>
 </plugin>

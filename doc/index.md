@@ -17,19 +17,15 @@
     under the License.
 -->
 
-# org.apache.cordova.deeplink
+# org.plugin.cordova.deeplink
 
-This plugin defines a global `device` object, which describes the device's hardware and software.
-Although the object is in the global scope, it is not available until after the `deviceready` event.
+This plugin add a listener to deeplink url from browser
 
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        console.log(device.cordova);
-    }
+<a href="example://app/login"></a>
 
 ## Installation
 
-    cordova plugin add org.apache.cordova.deeplink --variable URL_SCHEME=example
+cordova plugin add org.plugin.cordova.deeplink --variable URL_SCHEME=example
 
 ### Supported Platforms
 

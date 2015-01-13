@@ -16,7 +16,7 @@
        specific language governing permissions and limitations
        under the License.
 */
-package org.apache.cordova.deeplink;
+package org.plugin.cordova.deeplink;
 
 import java.util.TimeZone;
 import org.apache.cordova.CordovaWebView;
