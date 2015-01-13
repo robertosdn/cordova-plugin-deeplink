@@ -19,24 +19,25 @@
 package org.apache.cordova.deeplink;
 
 import java.util.TimeZone;
-import android.content.Intent;
-import android.net.Uri;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.provider.Settings;
 
 public class Deeplink extends CordovaPlugin {
     public static final String TAG = "Deeplink";
 
-    public static String uri = "/";
+    public static Intent startIntent;
 
-    private static final String ANDROID_PLATFORM = "Android";
+    private CallbackContext pluginCallbackContext = null;
 
     /**
      * Constructor.
@@ -53,9 +54,7 @@ public class Deeplink extends CordovaPlugin {
      */
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-		if(cordova.getActivity().getIntent().getData() != null){
-			Deeplink.uri = cordova.getActivity().getIntent().getData().toString();
-		}
+		Deeplink.startIntent = cordova.getActivity().getIntent();		
     }
 
     /**
@@ -66,13 +65,14 @@ public class Deeplink extends CordovaPlugin {
      * @param callbackContext   The callback id used when calling back into JavaScript.
      * @return                  True if the action was valid, false if not.
      */
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("getUri")) {
-            JSONObject r = new JSONObject();
-            r.put("uri", Deeplink.uri);
-            callbackContext.success(r);
-        }
-        else {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
+		if (action.equals("start")) {
+			this.pluginCallbackContext = callbackContext;			
+			JSONObject data = getData(Deeplink.startIntent);			
+			if(data != null){
+				callbackContext.success(data);
+			}
+        } else {
             return false;
         }
         return true;
@@ -82,6 +82,34 @@ public class Deeplink extends CordovaPlugin {
      * Called when the activity receives a new intent.
      */
     public void onNewIntent(Intent intent) {
-		//
+		sendUpdate(getData(intent), true);
+    }
+
+	private JSONObject getData(Intent intent) {
+		JSONObject obj = new JSONObject();
+        try {
+			Uri uri = intent.getData();
+			if(uri != null){
+				obj.put("uri", uri.toString());
+				return obj;
+			}			
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * Create a new plugin result and send it back to JavaScript
+     *
+     * @param deeplink data to set as navigator.deeplink
+     */
+    private void sendUpdate(JSONObject data, boolean keepCallback) {
+        if (data != null && this.pluginCallbackContext != null) {
+            PluginResult result = new PluginResult(PluginResult.Status.OK, data);
+            result.setKeepCallback(keepCallback);			
+            this.pluginCallbackContext.sendPluginResult(result);
+			Log.e(TAG, "Enviado callback***");
+        }
     }
 }

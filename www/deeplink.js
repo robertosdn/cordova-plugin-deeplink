@@ -30,31 +30,32 @@ var argscheck = require('cordova/argscheck'),
  * @constructor
  */
 function Deeplink() {
-    this.available = false;
-    this.uri = null;
-
-    var me = this;
+    cordova.addWindowEventHandler("deeplinkchange");
 
     channel.onCordovaReady.subscribe(function() {
-        me.getUri(function(data) {
-            me.available = true;
-            me.uri = data.uri;
-        },function(e) {
-            me.available = false;
-            utils.alert("[ERROR] Error initializing Cordova: " + e);
-        });
+        exec(deeplink._start, deeplink._error, "Deeplink", "start", []);
     });
 }
 
 /**
- * Get Deeplink uri
+ * Callback for deeplink
  *
- * @param {Function} successCallback The function to call when the heading data is available
- * @param {Function} errorCallback The function to call when there is an error getting the heading data. (OPTIONAL)
+ * @param {Object} data
  */
-Deeplink.prototype.getUri = function(successCallback, errorCallback) {
-    argscheck.checkArgs('fF', 'Deeplink.getUri', arguments);
-    exec(successCallback, errorCallback, "Deeplink", "getUri", []);
+Deeplink.prototype._start = function (data) {
+	if (data) {		
+		cordova.fireWindowEvent("deeplinkchange", data);
+		console.log("Data OK+++++:" + data.uri);
+	}
 };
 
-module.exports = new Deeplink();
+/**
+ * Error callback for deeplink start
+ */
+Deeplink.prototype._error = function(e) {
+    console.log("Error initializing Deeplink: " + e);
+};
+
+var deeplink = new Deeplink();
+
+module.exports = deeplink;
