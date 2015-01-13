@@ -29,16 +29,7 @@ Although the object is in the global scope, it is not available until after the 
 
 ## Installation
 
-    cordova plugin add org.apache.cordova.deeplink
-
-## Properties
-
-- navigation.deeplink
-
-
-## navigation.deeplink
-
-Get the deep link de opened app.
+    cordova plugin add org.apache.cordova.deeplink --variable URL_SCHEME=example
 
 ### Supported Platforms
 
@@ -46,4 +37,8 @@ Get the deep link de opened app.
 
 ### Quick Example
 
+window.addEventListener("deeplinkchange", onDeeplinkChange, false);
 
+function onDeeplinkChange(data) {
+	alert(data.uri);
+}

@@ -109,7 +109,6 @@ public class Deeplink extends CordovaPlugin {
             PluginResult result = new PluginResult(PluginResult.Status.OK, data);
             result.setKeepCallback(keepCallback);			
             this.pluginCallbackContext.sendPluginResult(result);
-			Log.e(TAG, "Enviado callback***");
         }
     }
 }

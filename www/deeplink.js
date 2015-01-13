@@ -45,7 +45,6 @@ function Deeplink() {
 Deeplink.prototype._start = function (data) {
 	if (data) {		
 		cordova.fireWindowEvent("deeplinkchange", data);
-		console.log("Data OK+++++:" + data.uri);
 	}
 };
 
