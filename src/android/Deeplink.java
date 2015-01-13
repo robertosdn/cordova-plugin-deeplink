@@ -19,7 +19,8 @@
 package org.apache.cordova.deeplink;
 
 import java.util.TimeZone;
-
+import android.content.Intent;
+import android.net.Uri;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -33,7 +34,7 @@ import android.provider.Settings;
 public class Deeplink extends CordovaPlugin {
     public static final String TAG = "Deeplink";
 
-    public static String uri;
+    public static String uri = "/";
 
     private static final String ANDROID_PLATFORM = "Android";
 
@@ -52,7 +53,9 @@ public class Deeplink extends CordovaPlugin {
      */
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        Deeplink.uri = getUri();
+		if(cordova.getActivity().getIntent().getData() != null){
+			Deeplink.uri = cordova.getActivity().getIntent().getData().toString();
+		}
     }
 
     /**
@@ -75,16 +78,10 @@ public class Deeplink extends CordovaPlugin {
         return true;
     }
 
-    //--------------------------------------------------------------------------
-    // LOCAL METHODS
-    //--------------------------------------------------------------------------
-
-    /**
-     * Get the OS name.
-     * 
-     * @return
+	/**
+     * Called when the activity receives a new intent.
      */
-    public String getUri() {        
-        return "/uid?koi=6&pp=0";
+    public void onNewIntent(Intent intent) {
+		//
     }
 }

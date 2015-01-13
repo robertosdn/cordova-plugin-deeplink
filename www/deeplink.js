@@ -25,13 +25,8 @@ var argscheck = require('cordova/argscheck'),
     exec = require('cordova/exec'),
     cordova = require('cordova');
 
-channel.createSticky('onCordovaInfoReady');
-// Tell cordova channel to wait on the CordovaInfoReady event
-channel.waitForInitialization('onCordovaInfoReady');
-
 /**
- * This represents the mobile deeplink, and provides properties for inspecting the uri of the
- * app.
+ * This represents the mobile deeplink, and provides properties for inspecting the uri of the app.
  * @constructor
  */
 function Deeplink() {
@@ -42,10 +37,8 @@ function Deeplink() {
 
     channel.onCordovaReady.subscribe(function() {
         me.getUri(function(data) {
-            var buildLabel = cordova.version;
             me.available = true;
-            me.uri = data.uuid;
-            channel.onCordovaInfoReady.fire();
+            me.uri = data.uri;
         },function(e) {
             me.available = false;
             utils.alert("[ERROR] Error initializing Cordova: " + e);
