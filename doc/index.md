@@ -38,5 +38,5 @@ cordova plugin add org.plugin.cordova.deeplink --variable URL_SCHEME=example
 window.addEventListener("deeplinkchange", onDeeplinkChange, false);
 
 function onDeeplinkChange(data) {
-	alert(data.uri);
+	alert(data.uri);// show string: example://app/login
 }
