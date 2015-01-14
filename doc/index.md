@@ -21,7 +21,9 @@
 
 This plugin add a listener to deeplink url from browser
 
-<a href="example://app/login"></a>
+```html
+<a href="example://app/login">open app</a>
+````
 
 ## Installation
 
